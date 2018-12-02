@@ -1,6 +1,6 @@
 Unit SysLog.Client;
 //==============================================================================
-//== Procedure Comuni                                        © XP Informatica ==
+//== SysLog Client                                           © XP Informatica ==
 //==                         Realizzato da Cavicchioli Sergio - sergio@xpi.it ==
 //==============================================================================
 //== Unit di Gestione Invio messaggi a SysLogServer UDP                       ==
@@ -13,7 +13,7 @@ Unit SysLog.Client;
 //== + Aggiunta Pulizia Caratteri su Nome Processo                            ==
 //== + Creata Funzione Publica SysLogMsg()                                    ==
 //== + Aggiunto Caricamento Nome Host da File ini                             ==
-//== + Aggiunto controllo LvReg (Livello di Registrazione eventi              ==
+//== + Aggiunto controllo LvReg (Livello di Registrazione eventi)             ==
 //==                                                                          ==
 //==============================================================================
 
@@ -42,7 +42,7 @@ Type
 Var
   DmSysLog: TDmSysLog;
 
-  Procedure SysLogMsg(const ASeverity: Integer; const AText: String);
+  Procedure SysLogMsg(const ASeverity: Integer; Const AText: String);
 
 Implementation
 
@@ -58,7 +58,7 @@ Var
   S : String;
 Begin
   S := ExtractFileName( ExtractFileName(ParamStr(0)) );
-  // Il nome Processo sopporta solo lettere e numeri, pulisco il nome
+  // Il nome Processo supporta solo lettere e numeri, pulisco il nome
   S := ReplaceStr(S, '_', '');
   S := ReplaceStr(S, '-', '');
   S := ReplaceStr(S, ':', '');
@@ -82,7 +82,7 @@ Begin
 
   If IdSysLog.Host <> '' Then
   Try
-    IdSysLog.Active := True;;
+    IdSysLog.Active := True;
     IdSysLog.Connect;
   Finally
   End;
@@ -97,24 +97,24 @@ Begin
 End;
 
 //==============================================================================
-Procedure TDmSysLog.SendMsg(ASeverity: TIdSyslogSeverity; const AText: String);
+Procedure TDmSysLog.SendMsg(ASeverity: TIdSyslogSeverity; Const AText: String);
 Var
-  Gr : Integer;
+  LGr : Integer;
 Begin
   If Not IdSysLog.Connected Then Exit;
 
   Case ASeverity Of
-    slEmergency:     Gr := 0;
-    slAlert:         Gr := 1;
-    slCritical:      Gr := 2;
-    slError:         Gr := 3;
-    slWarning:       Gr := 4;
-    slNotice:        Gr := 5;
-    slInformational: Gr := 6;
-    slDebug:         Gr := 7;
+    slEmergency:     LGr := 0;
+    slAlert:         LGr := 1;
+    slCritical:      LGr := 2;
+    slError:         LGr := 3;
+    slWarning:       LGr := 4;
+    slNotice:        LGr := 5;
+    slInformational: LGr := 6;
+    slDebug:         LGr := 7;
   End;
 
-  If LevelReg < Gr Then Exit;
+  If LevelReg < LGr Then Exit;
 
   LogMessage.Msg.Content := AText;
 

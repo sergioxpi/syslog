@@ -1,6 +1,6 @@
-unit DmDati;
+Unit SysLog.Data;
 
-interface
+Interface
 
 uses
   System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,

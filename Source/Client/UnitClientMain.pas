@@ -1,72 +1,66 @@
-unit UnitClientMain;
+Unit UnitClientMain;
+//==============================================================================
+//== SysLog Client                                           © XP Informatica ==
+//==                         Realizzato da Cavicchioli Sergio - sergio@xpi.it ==
+//==============================================================================
+//== Unit Demo                                                                ==
+//==============================================================================
+//== 16/06/2018 Cavicchioli Sergio                                            ==
+//== + Realizzazione                                                          ==
+//==                                                                          ==
+//==============================================================================
 
-interface
+Interface
 
-uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, IdBaseComponent,
-  IdComponent, IdUDPBase, IdUDPClient, IdSysLog, IdSysLogMessage;
+Uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls;
 
-type
-  TForm2 = class(TForm)
-    IdSysLog1: TIdSysLog;
-    Button1: TButton;
-    Button2: TButton;
-    IdSysLogMessage1: TIdSysLogMessage;
-    Edit1: TEdit;
+Type
+  TFormMainClient = Class(TForm)
+    BtnSend: TButton;
+    EdMessage: TEdit;
     EdServer: TEdit;
     Label1: TLabel;
     Label2: TLabel;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-  private
+    ComboType: TComboBox;
+    Label3: TLabel;
+    procedure BtnSendClick(Sender: TObject);
+  Private
     { Private declarations }
-  public
+  Public
     { Public declarations }
-  end;
+  End;
 
-var
-  Form2: TForm2;
+Var
+  FormMainClient: TFormMainClient;
 
-implementation
+Implementation
 
 {$R *.dfm}
 
-Uses System.IOUtils;
+Uses SysLog.Client;
 
-procedure TForm2.Button1Click(Sender: TObject);
-begin
-  IdSysLog1.Host := EdServer.Text;
+//==============================================================================
+Procedure TFormMainClient.BtnSendClick(Sender: TObject);
+Begin
 
-  IdSysLog1.Active := Not IdSysLog1.Active;
-  If IdSysLog1.Active then
-    Button1.Caption := 'Ferma'
-  Else
-    Button1.Caption := 'Avvia';
+  If Not DmSysLog.IdSysLog.Connected Then Begin
+    DmSysLog.IdSysLog.Host := EdServer.Text;
+    DmSysLog.IdSysLog.Connect;
+  End;
 
-  IdSysLog1.Connect;
-end;
+  If DmSysLog.IdSysLog.Host <> EdServer.Text Then Begin
+    DmSysLog.IdSysLog.Disconnect;
+    DmSysLog.IdSysLog.Host := EdServer.Text;
+//    DmSysLog.IdSysLog.Active := True;
+    DmSysLog.IdSysLog.Connect;
+  End;
 
-procedure TForm2.Button2Click(Sender: TObject);
-begin
+  SysLogMsg(ComboType.ItemIndex, EdMessage.Text );
 
-  IdSysLogMessage1.Msg.Process := ExtractFileName(Application.ExeName);
-  IdSysLogMessage1.Msg.PID     := GetCurrentProcessId;
-  IdSysLogMessage1.Msg.Content := Edit1.Text;
+End;
 
-  IdSysLogMessage1.Severity   := TIdSyslogSeverity.slInformational;
-
-//  TIdSyslogSeverity = (slEmergency, {0 - emergency - system unusable}
-//              slAlert, {1 - action must be taken immediately }
-//              slCritical, { 2 - critical conditions }
-//              slError, {3 - error conditions }
-//              slWarning, {4 - warning conditions }
-//              slNotice, {5 - normal but signification condition }
-//              slInformational, {6 - informational }
-//              slDebug); {7 - debug-level messages }
-
-
-  IdSysLog1.SendLogMessage( IdSysLogMessage1 );
-end;
-
-end.
+//==============================================================================
+End.

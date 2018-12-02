@@ -40,12 +40,12 @@ begin
   Dati.SyslogServer.OnSyslog := SyslogServerSyslog;
 end;
 
-procedure TForm1.SyslogServerSyslog(Sender: TObject;
+Procedure TForm1.SyslogServerSyslog(Sender: TObject;
   ASysLogMessage: TIdSysLogMessage; ABinding: TIdSocketHandle);
-begin
+Begin
   Dati.SyslogServerSyslog(Sender, ASysLogMessage, ABinding);
 
   Memo1.Lines.Add( ASysLogMessage.Hostname + ' ' + ABinding.PeerIP + ' ' + ASysLogMessage.Msg.Text );
-end;
+End;
 
-end.
+End.
