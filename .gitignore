@@ -1,0 +1,11 @@
+*.local
+*.identcache
+__history
+__recovery
+Daemon
+Debug
+Release
+Win32
+Win64
+Linux64
+*.stat

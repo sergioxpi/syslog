@@ -1,0 +1,72 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{461B13D9-FBF7-4044-9A5B-234B44BCE1CE}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Server\SysLogSrv.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Viewer\SysLogViewer.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Server\SysLogWin.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Client\SysLogClient.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="SysLogSrv">
+        <MSBuild Projects="Server\SysLogSrv.dproj"/>
+    </Target>
+    <Target Name="SysLogSrv:Clean">
+        <MSBuild Projects="Server\SysLogSrv.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SysLogSrv:Make">
+        <MSBuild Projects="Server\SysLogSrv.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SysLogViewer">
+        <MSBuild Projects="Viewer\SysLogViewer.dproj"/>
+    </Target>
+    <Target Name="SysLogViewer:Clean">
+        <MSBuild Projects="Viewer\SysLogViewer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SysLogViewer:Make">
+        <MSBuild Projects="Viewer\SysLogViewer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SysLogWin">
+        <MSBuild Projects="Server\SysLogWin.dproj"/>
+    </Target>
+    <Target Name="SysLogWin:Clean">
+        <MSBuild Projects="Server\SysLogWin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SysLogWin:Make">
+        <MSBuild Projects="Server\SysLogWin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SysLogClient">
+        <MSBuild Projects="Client\SysLogClient.dproj"/>
+    </Target>
+    <Target Name="SysLogClient:Clean">
+        <MSBuild Projects="Client\SysLogClient.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SysLogClient:Make">
+        <MSBuild Projects="Client\SysLogClient.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="SysLogSrv;SysLogViewer;SysLogWin;SysLogClient"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="SysLogSrv:Clean;SysLogViewer:Clean;SysLogWin:Clean;SysLogClient:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="SysLogSrv:Make;SysLogViewer:Make;SysLogWin:Make;SysLogClient:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
