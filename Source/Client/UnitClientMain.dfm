@@ -1,10 +1,12 @@
-object Form2: TForm2
+object FormMainClient: TFormMainClient
   Left = 0
   Top = 0
   Caption = 'SysLog Client Demo'
-  ClientHeight = 300
-  ClientWidth = 635
+  ClientHeight = 212
+  ClientWidth = 484
   Color = clBtnFace
+  Constraints.MinHeight = 250
+  Constraints.MinWidth = 500
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -14,63 +16,70 @@ object Form2: TForm2
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 79
+    Left = 37
     Top = 35
-    Width = 69
+    Width = 32
     Height = 13
     Alignment = taRightJustify
-    Caption = 'Server SysLog'
+    Caption = 'Server'
   end
   object Label2: TLabel
-    Left = 106
-    Top = 83
+    Left = 27
+    Top = 99
     Width = 42
     Height = 13
     Alignment = taRightJustify
     Caption = 'Message'
   end
-  object Button1: TButton
-    Left = 152
-    Top = 200
+  object Label3: TLabel
+    Left = 45
+    Top = 72
+    Width = 24
+    Height = 13
+    Alignment = taRightJustify
+    Caption = 'Type'
+  end
+  object BtnSend: TButton
+    Left = 73
+    Top = 138
     Width = 75
     Height = 25
-    Caption = 'Button1'
+    Caption = 'Send'
     TabOrder = 0
-    OnClick = Button1Click
+    OnClick = BtnSendClick
   end
-  object Button2: TButton
-    Left = 304
-    Top = 200
-    Width = 75
-    Height = 25
-    Caption = 'Button2'
-    TabOrder = 1
-    OnClick = Button2Click
-  end
-  object Edit1: TEdit
-    Left = 152
-    Top = 80
-    Width = 313
+  object EdMessage: TEdit
+    Left = 73
+    Top = 96
+    Width = 369
     Height = 21
-    TabOrder = 2
-    Text = 'Edit1'
+    TabOrder = 1
+    Text = 'Message'
   end
   object EdServer: TEdit
-    Left = 152
+    Left = 73
     Top = 32
-    Width = 121
+    Width = 145
     Height = 21
+    TabOrder = 2
+    Text = '127.0.0.1'
+  end
+  object ComboType: TComboBox
+    Left = 73
+    Top = 69
+    Width = 145
+    Height = 21
+    ItemIndex = 6
     TabOrder = 3
-    Text = '172.17.3.42'
-  end
-  object IdSysLog1: TIdSysLog
-    Host = '172.17.3.42'
-    Left = 48
-    Top = 192
-  end
-  object IdSysLogMessage1: TIdSysLogMessage
-    Msg.Text = 'pippo[1234]: sfsfs'
-    Left = 48
-    Top = 128
+    Text = 'Informational'
+    Items.Strings = (
+      'Emergency'
+      'Alert'
+      'Critical'
+      'Error'
+      'Warning'
+      'Notice'
+      'Informational'
+      'Debug')
   end
 end
