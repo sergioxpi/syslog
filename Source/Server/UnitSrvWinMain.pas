@@ -73,7 +73,10 @@ Begin
   ActStop.Enabled := Dati.SyslogServer.Active = True;
 End;
 
+<<<<<<< HEAD
 //==============================================================================
+=======
+>>>>>>> 50640d87115b9c41b23a3b601507094a63262ee6
 Procedure TForm1.SyslogServerSyslog(Sender: TObject;
   ASysLogMessage: TIdSysLogMessage; ABinding: TIdSocketHandle);
 Begin
@@ -82,5 +85,8 @@ Begin
   Memo1.Lines.Add( ASysLogMessage.Hostname + ' ' + ABinding.PeerIP + ' ' + ASysLogMessage.Msg.Text );
 End;
 
+<<<<<<< HEAD
 //==============================================================================
+=======
+>>>>>>> 50640d87115b9c41b23a3b601507094a63262ee6
 End.
