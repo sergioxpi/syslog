@@ -15,14 +15,22 @@ Unit SysLog.Client;
 //== + Aggiunto Caricamento Nome Host da File ini                             ==
 //== + Aggiunto controllo LvReg (Livello di Registrazione eventi)             ==
 //==                                                                          ==
+//== 04/12/2018 Cavicchioli Sergio                                            ==
+//== * Modifiche per Compatibilità con Delphi XE                              ==
+//==                                                                          ==
 //==============================================================================
 
 Interface
 
 Uses
-  System.SysUtils, System.Classes, System.StrUtils, System.IniFiles,
+  SysUtils, Classes, StrUtils, IniFiles,
 {$IFDEF MSWINDOWS}
+  Forms,
+  {$IFDEF  VER220} // Delphi XE
+  Windows,
+  {$ELSE}
   Winapi.Windows,
+  {$ENDIF}
 {$ENDIF}
   IdSysLogMessage, IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSysLog;
 
@@ -50,7 +58,7 @@ Implementation
 
 {$R *.dfm}
 
-Uses System.IOUtils;
+Uses IOUtils;
 
 //==============================================================================
 Procedure TDmSysLog.DataModuleCreate(Sender: TObject);
@@ -88,6 +96,9 @@ Begin
   End;
 
   SysLogMsg( 7, 'EVENT=TDmSysLog.DataModuleCreate' );
+{$IFDEF MSWINDOWS}
+  SysLogMsg( 6, 'ACTION=RUN Application#PATH='+Application.ExeName );
+{$ENDIF}
 End;
 
 //==============================================================================
@@ -135,6 +146,9 @@ End;
 //==============================================================================
 Procedure SysLogMsg(const ASeverity: Integer; const AText: String);
 Begin
+  If Not Assigned(DmSysLog) Then
+    Application.CreateForm(TDmSysLog, DmSysLog);
+
   If Not DmSysLog.IdSysLog.Connected Then Exit;
 
   If DmSysLog.LevelReg < ASeverity Then Exit;
