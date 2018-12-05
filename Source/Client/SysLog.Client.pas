@@ -78,14 +78,18 @@ Begin
   LogMessage.Msg.PID     := 0;
 {$ENDIF}
 
-  IniSysLog := TMemIniFile.Create( TPath.Combine(ExtractFilePath(ParamStr(0)), 'SysLog.Conf') );
+  Try
+    IniSysLog := TMemIniFile.Create( TPath.Combine(ExtractFilePath(ParamStr(0)), 'SysLog.Conf') );
 
-  IdSysLog.Host := IniSysLog.ReadString('SysLog', 'Server', '');
-  LevelReg      := IniSysLog.ReadInteger('SysLog', 'LevelReg', 7);
-  If Not FileExists(IniSysLog.FileName) Then Begin
-    IniSysLog.WriteString('SysLog', 'Server', IdSysLog.Host);
-    IniSysLog.WriteInteger('SysLog', 'LevelReg', LevelReg);
-    IniSysLog.UpdateFile;
+    IdSysLog.Host := IniSysLog.ReadString('SysLog', 'Server', '');
+    LevelReg      := IniSysLog.ReadInteger('SysLog', 'LevelReg', 7);
+    If Not FileExists(IniSysLog.FileName) Then Begin
+      IniSysLog.WriteString('SysLog', 'Server', IdSysLog.Host);
+      IniSysLog.WriteInteger('SysLog', 'LevelReg', LevelReg);
+      IniSysLog.UpdateFile;
+    End;
+  Finally
+    IniSysLog.Free;
   End;
 
   If IdSysLog.Host <> '' Then
