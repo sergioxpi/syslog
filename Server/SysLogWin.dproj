@@ -107,7 +107,7 @@
             <Form>Form1</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\Source\Server\DmDati.pas">
+        <DCCReference Include="..\Source\Server\SysLog.Data.pas">
             <Form>Dati</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
