@@ -15,14 +15,22 @@ Unit SysLog.Client;
 //== + Aggiunto Caricamento Nome Host da File ini                             ==
 //== + Aggiunto controllo LvReg (Livello di Registrazione eventi)             ==
 //==                                                                          ==
+//== 04/12/2018 Cavicchioli Sergio                                            ==
+//== * Modifiche per Compatibilità con Delphi XE                              ==
+//==                                                                          ==
 //==============================================================================
 
 Interface
 
 Uses
-  System.SysUtils, System.Classes, System.StrUtils, System.IniFiles,
+  SysUtils, Classes, StrUtils, IniFiles,
 {$IFDEF MSWINDOWS}
+  Forms,
+  {$IFDEF  VER220} // Delphi XE
+  Windows,
+  {$ELSE}
   Winapi.Windows,
+  {$ENDIF}
 {$ENDIF}
   IdSysLogMessage, IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSysLog;
 
@@ -50,7 +58,7 @@ Implementation
 
 {$R *.dfm}
 
-Uses System.IOUtils;
+Uses IOUtils;
 
 //==============================================================================
 Procedure TDmSysLog.DataModuleCreate(Sender: TObject);
@@ -70,14 +78,18 @@ Begin
   LogMessage.Msg.PID     := 0;
 {$ENDIF}
 
-  IniSysLog := TMemIniFile.Create( TPath.Combine(ExtractFilePath(ParamStr(0)), 'SysLog.Conf') );
+  Try
+    IniSysLog := TMemIniFile.Create( TPath.Combine(ExtractFilePath(ParamStr(0)), 'SysLog.Conf') );
 
-  IdSysLog.Host := IniSysLog.ReadString('SysLog', 'Server', '');
-  LevelReg      := IniSysLog.ReadInteger('SysLog', 'LevelReg', 7);
-  If Not FileExists(IniSysLog.FileName) Then Begin
-    IniSysLog.WriteString('SysLog', 'Server', IdSysLog.Host);
-    IniSysLog.WriteInteger('SysLog', 'LevelReg', LevelReg);
-    IniSysLog.UpdateFile;
+    IdSysLog.Host := IniSysLog.ReadString('SysLog', 'Server', '');
+    LevelReg      := IniSysLog.ReadInteger('SysLog', 'LevelReg', 7);
+    If Not FileExists(IniSysLog.FileName) Then Begin
+      IniSysLog.WriteString('SysLog', 'Server', IdSysLog.Host);
+      IniSysLog.WriteInteger('SysLog', 'LevelReg', LevelReg);
+      IniSysLog.UpdateFile;
+    End;
+  Finally
+    IniSysLog.Free;
   End;
 
   If IdSysLog.Host <> '' Then
@@ -88,6 +100,9 @@ Begin
   End;
 
   SysLogMsg( 7, 'EVENT=TDmSysLog.DataModuleCreate' );
+{$IFDEF MSWINDOWS}
+  SysLogMsg( 6, 'ACTION=RUN Application#PATH='+Application.ExeName );
+{$ENDIF}
 End;
 
 //==============================================================================
@@ -135,6 +150,9 @@ End;
 //==============================================================================
 Procedure SysLogMsg(const ASeverity: Integer; const AText: String);
 Begin
+  If Not Assigned(DmSysLog) Then
+    Application.CreateForm(TDmSysLog, DmSysLog);
+
   If Not DmSysLog.IdSysLog.Connected Then Exit;
 
   If DmSysLog.LevelReg < ASeverity Then Exit;
