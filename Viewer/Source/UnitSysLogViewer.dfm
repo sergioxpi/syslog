@@ -21,9 +21,14 @@ object FormMain: TFormMain
     Width = 893
     Height = 435
     Align = alClient
+    AllowedOperations = []
     AutoFitColWidths = True
     DataSource = DsQuery
     DynProps = <>
+    EditActions = [geaCopyEh, geaSelectAllEh]
+    IndicatorTitle.ShowDropDownSign = True
+    IndicatorTitle.TitleButton = True
+    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     ReadOnly = True
     SearchPanel.Enabled = True
     SortLocal = True
@@ -246,7 +251,7 @@ object FormMain: TFormMain
     Left = 48
     Top = 168
     Bitmap = {
-      494C0101010008001C0010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010101000800200010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000003300000023000000000000

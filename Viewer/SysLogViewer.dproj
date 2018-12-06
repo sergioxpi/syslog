@@ -6,7 +6,7 @@
         <MainSource>SysLogViewer.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Release</Config>
-        <Platform Condition="'$(Platform)'==''">Win64</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
     </PropertyGroup>
@@ -129,19 +129,19 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppEnableHighDPI>true</AppEnableHighDPI>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Build>8</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=XP Informatica;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.8;InternalName=SysLog;LegalCopyright=XP Informatica;LegalTrademarks=;OriginalFilename=SysLog;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=Realizzato da: Cavicchioli Sergio</VerInfo_Keys>
+        <VerInfo_Build>9</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=XP Informatica;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.9;InternalName=SysLog;LegalCopyright=XP Informatica;LegalTrademarks=;OriginalFilename=SysLog;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=Realizzato da: Cavicchioli Sergio</VerInfo_Keys>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-        <Icon_MainIcon>SysLogInterroga_Icon.ico</Icon_MainIcon>
+        <Icon_MainIcon>SysLogViewer_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppEnableHighDPI>true</AppEnableHighDPI>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-        <VerInfo_Build>3</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=XP Informatica;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.3;InternalName=SysLog;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=Realizzato da: Cavicchioli Sergio</VerInfo_Keys>
-        <Icon_MainIcon>SysLogInterroga_Icon1.ico</Icon_MainIcon>
+        <VerInfo_Build>4</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=XP Informatica;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.4;InternalName=SysLog;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=Realizzato da: Cavicchioli Sergio</VerInfo_Keys>
+        <Icon_MainIcon>SysLogViewer_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
