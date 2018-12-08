@@ -9,6 +9,10 @@ Unit UnitSysLogViewer;
 //== 26/06/2018 Cavicchioli Sergio                                            ==
 //== + Aggiunto supporto file Ini per Configurazione Server                   ==
 //==                                                                          ==
+//== 06/12/2018 Cavicchioli Sergio                                            ==
+//== + Aggiunto sulla griglia selezione multipla, menù per seleziona tutto e  ==
+//==   selezione celle, copia incolla per esportazione excel                  ==
+//==                                                                          ==
 //==============================================================================
 
 Interface
