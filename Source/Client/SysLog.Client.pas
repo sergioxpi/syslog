@@ -18,6 +18,9 @@ Unit SysLog.Client;
 //== 04/12/2018 Cavicchioli Sergio                                            ==
 //== * Modifiche per Compatibilità con Delphi XE                              ==
 //==                                                                          ==
+//== 08/12/2018 Cavicchioli Sergio                                            ==
+//== + Aggiunto Supporto per iOS e Android                                    ==
+//==                                                                          ==
 //==============================================================================
 
 Interface
@@ -25,12 +28,15 @@ Interface
 Uses
   SysUtils, Classes, StrUtils, IniFiles,
 {$IFDEF MSWINDOWS}
-  Forms,
+  FMX.Forms,
   {$IFDEF  VER220} // Delphi XE
   Windows,
   {$ELSE}
   Winapi.Windows,
   {$ENDIF}
+{$ENDIF}
+{$IF DEFINED(IOS) or DEFINED(ANDROID)}
+  FMX.Forms,
 {$ENDIF}
   IdSysLogMessage, IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSysLog;
 
@@ -79,7 +85,12 @@ Begin
 {$ENDIF}
 
   Try
+  {$IF DEFINED(MSWINDOWS)}
     IniSysLog := TMemIniFile.Create( TPath.Combine(ExtractFilePath(ParamStr(0)), 'SysLog.Conf') );
+  {$ENDIF}
+  {$IF DEFINED(IOS) or DEFINED(ANDROID)}
+    IniSysLog := TMemIniFile.Create( TPath.Combine(TPath.GetDocumentsPath, 'SysLog.Conf') );
+  {$ENDIF}
 
     IdSysLog.Host := IniSysLog.ReadString('SysLog', 'Server', '');
     LevelReg      := IniSysLog.ReadInteger('SysLog', 'LevelReg', 7);
@@ -101,7 +112,7 @@ Begin
 
   SysLogMsg( 7, 'EVENT=TDmSysLog.DataModuleCreate' );
 {$IFDEF MSWINDOWS}
-  SysLogMsg( 6, 'ACTION=RUN Application#PATH='+Application.ExeName );
+  SysLogMsg( 6, 'ACTION=RUN Application#PATH='+ParamStr(0) );
 {$ENDIF}
 End;
 
@@ -150,8 +161,10 @@ End;
 //==============================================================================
 Procedure SysLogMsg(const ASeverity: Integer; const AText: String);
 Begin
+{$IF DEFINED(MSWINDOWS) or DEFINED(IOS) or DEFINED(ANDROID)}
   If Not Assigned(DmSysLog) Then
     Application.CreateForm(TDmSysLog, DmSysLog);
+{$ENDIF}
 
   If Not DmSysLog.IdSysLog.Connected Then Exit;
 
