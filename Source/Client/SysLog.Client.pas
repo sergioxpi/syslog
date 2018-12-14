@@ -28,7 +28,7 @@ Interface
 Uses
   SysUtils, Classes, StrUtils, IniFiles,
 {$IFDEF MSWINDOWS}
-  FMX.Forms,
+  Forms,
   {$IFDEF  VER220} // Delphi XE
   Windows,
   {$ELSE}
